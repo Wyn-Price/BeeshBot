@@ -129,14 +129,19 @@ public class EventSystem
     			for(File file : new File(Main.BASE_LOCATION, event.getGuild().getStringID()).listFiles())
     				if(file.isFile() && ACCEPTED_FILETYPES.contains(FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()))
     					acceptedFiles.add(file); 
-    			try 
-    			{
-					event.getChannel().sendFile(acceptedFiles.get(new Random().nextInt(acceptedFiles.size())));
-				} 
-    			catch (FileNotFoundException e) 
-    			{
-					e.printStackTrace();
-				}
+    			Random rand = new Random();
+    			if(args.length > 1)
+    				rand = new Random((long)event.getMessage().getContent().replace("!beesh ", "").hashCode());
+
+    			if(!acceptedFiles.isEmpty())
+	    			try 
+	    			{
+						event.getChannel().sendFile(acceptedFiles.get(rand.nextInt(acceptedFiles.size())));
+					} 
+	    			catch (FileNotFoundException e) 
+	    			{
+						e.printStackTrace();
+					}
     		}
     		Utils.saveObject(can_upload, new File(Main.BASE_LOCATION, "permissions.wyn"));
     	}
