@@ -24,7 +24,7 @@ import sx.blah.discord.handle.obj.Permissions;
 public class EventSystem 
 {
 	
-	private static final List<String> ACCEPTED_FILETYPES = Arrays.asList("png", "jpg", "gif");
+	private static final List<String> ACCEPTED_FILETYPES = Arrays.asList("png", "jpg", "gif", "jpeg");
 	    
 	private HashMap<Long, ArrayList<Long>> can_upload;
 	
@@ -45,7 +45,7 @@ public class EventSystem
 			can_upload = (HashMap<Long, ArrayList<Long>>) Utils.loadObject(new File(Main.BASE_LOCATION, "permissions.wyn"));
     	String[] args = event.getMessage().getContent().split(" ");
     	if(uploading.get(event.getChannel().getLongID()) != null && uploading.get(event.getChannel().getLongID()).contains(event.getAuthor().getLongID())
-    		&& !event.getMessage().getAttachments().isEmpty())
+    		&& !event.getMessage().getAttachments().isEmpty() && event.getAuthor().getPermissionsForGuild(event.getGuild()).contains(Permissions.MANAGE_SERVER))
     		downloadAttachment(event.getMessage().getAttachments(), event.getGuild(), event.getChannel());
     	if(args.length > 0 && args[0].equals("!beesh"))
     	{    			

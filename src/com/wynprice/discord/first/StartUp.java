@@ -1,5 +1,7 @@
 package com.wynprice.discord.first;
 
+import java.util.Arrays;
+
 public class StartUp 
 {
 	
@@ -11,6 +13,7 @@ public class StartUp
 		if(args.length < 2)
 			System.exit(1);
         Main.CLIENT.getDispatcher().registerListener(new EventSystem());
-        Main.GUI.setup();
+        if(Arrays.asList(args).contains("-GUI"))
+        	Main.GUI.setup();
     }
 }
